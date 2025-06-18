@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.Errors;
 import org.springframework.validation.ObjectError;
@@ -38,15 +37,14 @@ public class ProductController {
         if (errors.hasErrors()) {
             for (ObjectError error : errors.getAllErrors()) {
                 responseData.getMessages().add(error.getDefaultMessage());
-                // System.out.println(error.getDefaultMessage());
             }
             responseData.setStatus(false);
             responseData.setPayload(null);
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
         }
-        // return productServices.save(product);
         responseData.setStatus(true);
         responseData.setPayload(productServices.save(product));
+        responseData.setMessages(List.of("Create product Success!"));
         return ResponseEntity.ok(responseData);
     }
 
@@ -61,8 +59,20 @@ public class ProductController {
     }
 
     @PutMapping
-    public Product update(@RequestBody Product product) {
-        return productServices.save(product);
+    public ResponseEntity<ResponseData<Product>> update(@Valid @RequestBody Product product, Errors errors) {
+        ResponseData<Product> responseData = new ResponseData<>();
+        if (errors.hasErrors()) {
+            for (ObjectError error : errors.getAllErrors()) {
+                responseData.getMessages().add(error.getDefaultMessage());
+            }
+            responseData.setStatus(false);
+            responseData.setPayload(null);
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(responseData);
+        }
+        responseData.setStatus(true);
+        responseData.setPayload(productServices.save(product));
+        responseData.setMessages(List.of("Update product success!"));
+        return ResponseEntity.ok(responseData);
     }
 
     @DeleteMapping("/{id}")

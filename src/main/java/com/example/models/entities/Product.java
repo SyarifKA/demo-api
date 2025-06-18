@@ -1,12 +1,17 @@
 package com.example.models.entities;
 
 import java.io.Serializable;
+import java.util.Set;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.JoinTable;
+import jakarta.persistence.ManyToMany;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 
@@ -26,6 +31,13 @@ public class Product implements Serializable {
     @Column(name = "product_description", length = 500)
     private String description;
     private double price;
+
+    @ManyToOne
+    private Category category;
+
+    @ManyToMany
+    @JoinTable(name = "product_supplier", joinColumns = @JoinColumn(name = "tbl_product_id"), inverseJoinColumns = @JoinColumn(name = "supplier_id"))
+    private Set<Supplier> suppliers;
 
     public Product(Long id, String name, String description, double price) {
         this.id = id;
@@ -68,6 +80,22 @@ public class Product implements Serializable {
 
     public void setPrice(double price) {
         this.price = price;
+    }
+
+    public Category getCategory() {
+        return category;
+    }
+
+    public void setCategory(Category category) {
+        this.category = category;
+    }
+
+    public Set<Supplier> getSuppliers() {
+        return suppliers;
+    }
+
+    public void setSuppliers(Set<Supplier> suppliers) {
+        this.suppliers = suppliers;
     }
 
 }
