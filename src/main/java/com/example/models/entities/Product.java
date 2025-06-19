@@ -27,9 +27,11 @@ public class Product implements Serializable {
     @NotEmpty(message = "Name is required")
     @Column(name = "product_name", length = 100)
     private String name;
+
     @NotEmpty(message = "Description is required")
     @Column(name = "product_description", length = 500)
     private String description;
+
     private double price;
 
     @ManyToOne
@@ -37,7 +39,7 @@ public class Product implements Serializable {
 
     @ManyToMany
     @JoinTable(name = "product_supplier", joinColumns = @JoinColumn(name = "tbl_product_id"), inverseJoinColumns = @JoinColumn(name = "supplier_id"))
-    private Set<Supplier> suppliers;
+    private Set<Supplier> supplier;
 
     public Product(Long id, String name, String description, double price) {
         this.id = id;
@@ -91,11 +93,11 @@ public class Product implements Serializable {
     }
 
     public Set<Supplier> getSuppliers() {
-        return suppliers;
+        return supplier;
     }
 
-    public void setSuppliers(Set<Supplier> suppliers) {
-        this.suppliers = suppliers;
+    public void setSuppliers(Set<Supplier> supplier) {
+        this.supplier = supplier;
     }
 
 }

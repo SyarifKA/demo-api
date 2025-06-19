@@ -6,7 +6,7 @@ import java.util.List;
 public class ResponseData<T> {
     private boolean status;
     private List<String> messages = new ArrayList<>();
-    private T payload;
+    private Object payload;
 
     public boolean isStatus() {
         return status;
@@ -24,11 +24,11 @@ public class ResponseData<T> {
         this.messages = messages;
     }
 
-    public T getPayload() {
+    public Object getPayload() {
         return payload;
     }
 
-    public void setPayload(T payload) {
+    public void setPayload(Object payload) {
         this.payload = payload;
     }
 
