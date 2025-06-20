@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.ResponseData;
 import com.example.models.entities.Product;
+import com.example.models.entities.Supplier;
 import com.example.services.ProductServices;
 
 import jakarta.validation.Valid;
@@ -32,7 +33,6 @@ public class ProductController {
 
     @PostMapping
     public ResponseEntity<ResponseData<Product>> create(@Valid @RequestBody Product product, Errors errors) {
-
         ResponseData<Product> responseData = new ResponseData<>();
         if (errors.hasErrors()) {
             for (ObjectError error : errors.getAllErrors()) {
@@ -83,5 +83,10 @@ public class ProductController {
     @GetMapping("/search")
     public List<Product> findByName(@RequestParam("name") String name) {
         return productServices.findByName(name);
+    }
+
+    @PostMapping("/{id}")
+    public void addSupplier(@RequestBody Supplier supplier, @PathVariable("id") Long productId) {
+        productServices.addSupplier(supplier, productId);
     }
 }

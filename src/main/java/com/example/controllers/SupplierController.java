@@ -60,6 +60,7 @@ public class SupplierController {
 
         responseData.setStatus(true);
         responseData.setPayload(supplierservice.save(supplier));
+        responseData.setMessages(List.of("Success create new supplier"));
         return ResponseEntity.ok(responseData);
     }
 
@@ -82,6 +83,7 @@ public class SupplierController {
         }
         responseData.setStatus(true);
         responseData.setPayload(supplierservice.save(supplier));
+        responseData.setMessages(List.of("Success update supplier"));
         return ResponseEntity.ok(responseData);
     }
 
@@ -90,7 +92,7 @@ public class SupplierController {
         supplierservice.removeOne(id);
     }
 
-    @GetMapping("/{search}")
+    @GetMapping("/search")
     public List<Supplier> findByName(@RequestParam("name") String name) {
         return supplierservice.findByName(name);
     }

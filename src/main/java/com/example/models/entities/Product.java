@@ -3,6 +3,9 @@ package com.example.models.entities;
 import java.io.Serializable;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -16,7 +19,8 @@ import jakarta.persistence.Table;
 import jakarta.validation.constraints.NotEmpty;
 
 @Entity
-@Table(name = "tbl_product")
+@Table(name = "product")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Product implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -38,8 +42,9 @@ public class Product implements Serializable {
     private Category category;
 
     @ManyToMany
-    @JoinTable(name = "product_supplier", joinColumns = @JoinColumn(name = "tbl_product_id"), inverseJoinColumns = @JoinColumn(name = "supplier_id"))
-    private Set<Supplier> supplier;
+    @JoinTable(name = "product_supplier", joinColumns = @JoinColumn(name = "product_id"), inverseJoinColumns = @JoinColumn(name = "supplier_id"))
+    // @JsonManagedReference(value = "product-supplier")
+    private Set<Supplier> suppliers;
 
     public Product(Long id, String name, String description, double price) {
         this.id = id;
@@ -93,11 +98,11 @@ public class Product implements Serializable {
     }
 
     public Set<Supplier> getSuppliers() {
-        return supplier;
+        return suppliers;
     }
 
-    public void setSuppliers(Set<Supplier> supplier) {
-        this.supplier = supplier;
+    public void setSupplier(Set<Supplier> suppliers) {
+        this.suppliers = suppliers;
     }
 
 }

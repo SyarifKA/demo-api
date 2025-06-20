@@ -26,7 +26,7 @@ public class CategoryService {
         if (!category.isPresent()) {
             return null;
         }
-        return categoryRepo.save(category);
+        return categoryRepo.findById(id).get();
     }
 
     public Iterable<Category> findAll() {

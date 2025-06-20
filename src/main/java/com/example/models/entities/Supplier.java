@@ -3,6 +3,9 @@ package com.example.models.entities;
 import java.io.Serializable;
 import java.util.Set;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -14,6 +17,7 @@ import jakarta.validation.constraints.NotEmpty;
 
 @Entity
 @Table(name = "supplier")
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class, property = "id")
 public class Supplier implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -30,7 +34,8 @@ public class Supplier implements Serializable {
     @NotEmpty(message = "Email supplier is required")
     private String email;
 
-    @ManyToMany(mappedBy = "supplier")
+    @ManyToMany(mappedBy = "suppliers")
+    // @JsonBackReference(value = "product-supplier")
     private Set<Product> products;
 
     @Column(length = 100)
@@ -79,10 +84,4 @@ public class Supplier implements Serializable {
     public void setProducts(Set<Product> products) {
         this.products = products;
     }
-
-    public Iterable<Supplier> findAll(Supplier supplier) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findAll'");
-    }
-
 }

@@ -1,5 +1,7 @@
 package com.example.controllers;
 
+import java.util.List;
+
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -13,16 +15,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.CategoryData;
 import com.example.dto.ResponseData;
 import com.example.models.entities.Category;
 import com.example.services.CategoryService;
 
-import jakarta.persistence.Entity;
 import jakarta.validation.Valid;
 
-@Entity
+@RestController
 @RequestMapping("/api/categories")
 public class CategoryController {
 
@@ -51,6 +53,7 @@ public class CategoryController {
         Category category = modelMapper.map(categoryData, Category.class);
         responseData.setStatus(true);
         responseData.setPayload(categoryService.save(category));
+        responseData.setMessages(List.of("Success create new categories"));
         return ResponseEntity.ok(responseData);
     }
 
@@ -73,6 +76,7 @@ public class CategoryController {
         Category category = modelMapper.map(categoryData, Category.class);
         responseData.setStatus(true);
         responseData.setPayload(categoryService.save(category));
+        responseData.setMessages(List.of("Success update categories"));
         return ResponseEntity.ok(responseData);
     }
 
