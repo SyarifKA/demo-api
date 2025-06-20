@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.example.dto.CategoryData;
 import com.example.dto.ResponseData;
+import com.example.dto.SearchData;
 import com.example.models.entities.Category;
 import com.example.services.CategoryService;
 
@@ -83,5 +84,15 @@ public class CategoryController {
     @DeleteMapping("/{id}")
     public void removeOne(@PathVariable("id") Long id) {
         categoryService.removeOne(id);
+    }
+
+    @PostMapping("/search/name")
+    public Category getCategoryByName(@RequestBody SearchData searchData) {
+        return categoryService.findByCategoryName(searchData.getSearchKey());
+    }
+
+    @PostMapping("/search/nameilike")
+    public List<Category> getAllCategoryByName(@RequestBody SearchData searchData) {
+        return categoryService.findAllCategoryByName(searchData.getSearchKey());
     }
 }

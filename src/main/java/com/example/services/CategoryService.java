@@ -1,5 +1,6 @@
 package com.example.services;
 
+import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,4 +38,11 @@ public class CategoryService {
         categoryRepo.deleteById(id);
     }
 
+    public Category findByCategoryName(String name) {
+        return categoryRepo.findCategoryByName(name);
+    }
+
+    public List<Category> findAllCategoryByName(String name) {
+        return categoryRepo.findAllCategoryByName(name);
+    }
 }
